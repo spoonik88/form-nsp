@@ -265,14 +265,64 @@ var excludeModules='38';
 <!-- END: FOOTER -->
 
 </div>
-<<!-- script>
-	console.log("ghbdtn")
-</script> -->
+
 <script  src="https://code.jquery.com/jquery-3.4.0.slim.min.js"
   integrity="sha256-ZaXnYkHGqIhqTbJ6MB4l9Frs/r7U4jlx7ir8PJYBqbI="
   crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init("user_GnX1PHwwH54mKLKLTpjuI");//поверить
+   })();
+</script>
+<script>
+	var myform = $("#DiscontForm");
+myform.submit(function(event){
+	event.preventDefault();
+var formData = new FormData(this);
+    formData.append('service_id', 'default_service');
+    formData.append('template_id', 'template_VplfjU4z');
+    formData.append('user_id', ' user_GnX1PHwwH54mKLKLTpjuI');
+    formData.append('phone_number', $('#tell_id').val());
+    formData.append('first_name', $('#first_name_id').val());
+    formData.append('last_name', $('#last_name_id').val());
+     formData.append('country', $('#country_id').val());
+    formData.append('city', $('#city_id').val());
+     formData.append('email', $('#email_id').val());
+    formData.append('textarea-608', $('#textarea-608_id').val());
 
-<script scr="../js/form_reg-descont.js"></script>
+    //$("#phone_form").addClass("formGrayOut");
+    $.ajax('https://api.emailjs.com/api/v1.0/email/send-form', {
+        type: 'POST',
+        data: formData,
+        contentType: false, // auto-detection
+        processData: false // no need to parse formData to string
+    }).done(function() {
+        //$("#phone_form").removeClass("formGrayOut");
+        $('$DiscontForm').modal('toggle');
+        alert("Ваша заявка принята")
+    }).fail(function(error) {
+      //$("#phone_form").removeClass("formGrayOut");
+        alert('Oops... ' + JSON.stringify(error));
+    });
+  // Change to your service ID, or keep using the default service
+  // var service_id = "default_service";
+  // var template_id = "template_sBoaKoWh";
+
+  // myform.find("button").text("Sending...");
+  // emailjs.sendForm(service_id,template_id,myform[0])
+  // 	.then(function(){ 
+  //   	alert("Sent!");
+  //      myform.find("button").text("Send");
+  //   }, function(err) {
+  //      alert("Send email failed!\r\n Response:\n " + JSON.stringify(err));
+  //      myform.find("button").text("Send");
+  //   });
+  // return false;
+});
+console.log("ghbdtn");
+</script>
+<!-- <script scr="../js/form_reg-descont.js"></script> -->
 
 </body>
 
